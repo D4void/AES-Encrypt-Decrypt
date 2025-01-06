@@ -1,0 +1,20 @@
+<!-- Thunar custom action menu: copy <action> part to ~/.config/Thunar -->
+
+<?xml version="1.0" encoding="UTF-8"?>
+<actions>
+<action>
+	<icon>gcr-password</icon>
+	<name>encrypt decrypt </name>
+	<submenu></submenu>
+	<unique-id>1611436415613482-1</unique-id>
+	<command>/usr/local/bin/Encrypt-Decrypt.sh %n</command>
+	<description></description>
+	<range></range>
+	<patterns>*</patterns>
+	<audio-files/>
+	<image-files/>
+	<other-files/>
+	<text-files/>
+	<video-files/>
+</action>
+</actions>
