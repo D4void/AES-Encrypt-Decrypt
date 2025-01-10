@@ -60,41 +60,30 @@ do
     if [ "$ext" != "" ]; then
 
       pass_decrypt=`zenity --width=300 --entry --entry-text "$pass_decrypt" --hide-text --title "$pass" --text "$decrypt ${arg##*/} $pass_decrypt" "" 2>/dev/null`
-
       echo "$pass_decrypt" | gpg -o "${arg%.*}" --batch --passphrase-fd 0 -d "$arg" | zenity --progress --auto-close --pulsate --no-cancel
-
       if [ $? -ne 0 ]; then
           zenity --error --text "$dendnok"
       else
+          rm -f "$arg"
           zenity --info --text "$dendok"
       fi
-
     else
-
       pass_encrypt=`zenity --width=300 --entry --hide-text --entry-text "$pass_encrypt" --title "$pass" --text "$encrypt ${arg##*/}" "" 2>/dev/null`
-
       if [ "$pass_encrypt" != "" ]; then
-
         pass_encrypt2=`zenity --width=300 --entry --hide-text --entry-text "$pass_encrypt2" --title "$pass2" --text "$encrypt ${arg##*/}" "" 2>/dev/null`
-
         if [ "$pass_encrypt2" != "" ] && [ "$pass_encrypt" == "$pass_encrypt2" ]; then
-
           echo "$pass_encrypt2" | gpg --batch --passphrase-fd 0 --cipher-algo $algo -c "$arg" | zenity --progress --auto-close --pulsate --no-cancel
-
           if [ $? -ne 0 ]; then
             zenity --error --text "$cendnok"
           else
-            zenity --info --text "$cendok"
+            rm -f "$arg"
+            zenity --info --text "$cendok"            
           fi
-
         else
           zenity --error --text "$errpass"
         fi
-
       fi
-
     fi
-
 done
 
 set +o pipefail
